@@ -1,0 +1,537 @@
+﻿@charset "UTF-8";
+.is-size-4 {
+  font-size: 2.5rem !important; }
+.is-text {
+    position: relative;
+    top: -2px;
+    font-size: 14px;
+}
+@font-face {
+    font-family: 'sgds-icons';
+    src: url("/html/Dashboard/Foundation/Theming/fonts/sgds-icons.ttf?742wbr") format("truetype"), url("../fonts/sgds-icons.woff?742wbr") format("woff"), url("../fonts/sgds-icons.svg?742wbr#sgds-icons") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+.sgds-icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'sgds-icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.sgds-icon-breadcrumb:before {
+  content: ""; }
+
+.sgds-icon-callout:before {
+  content: ""; }
+
+.sgds-icon-hero:before {
+  content: ""; }
+
+.sgds-icon-mainnav:before {
+  content: ""; }
+
+.sgds-icon-sidenav:before {
+  content: ""; }
+
+.sgds-icon-table:before {
+  content: ""; }
+
+.sgds-icon-typography:before {
+  content: ""; }
+
+.sgds-icon-delete:before {
+  content: ""; }
+
+.sgds-icon-grid-alt:before {
+  content: ""; }
+
+.sgds-icon-pause-alt:before {
+  content: ""; }
+
+.sgds-icon-pause:before {
+  content: ""; }
+
+.sgds-icon-pencil:before {
+  content: ""; }
+
+.sgds-icon-play-alt:before {
+  content: ""; }
+
+.sgds-icon-play:before {
+  content: ""; }
+
+.sgds-icon-privacy-alt:before {
+  content: ""; }
+
+.sgds-icon-privacy:before {
+  content: ""; }
+
+.sgds-icon-signal:before {
+  content: ""; }
+
+.sgds-icon-stop:before {
+  content: ""; }
+
+.sgds-icon-telephone:before {
+  content: ""; }
+
+.sgds-icon-bookmark-alt:before {
+  content: ""; }
+
+.sgds-icon-star-alt:before {
+  content: ""; }
+
+.sgds-icon-guides:before {
+  content: ""; }
+
+.sgds-icon-sentimeter:before {
+  content: ""; }
+
+.sgds-icon-sharepoint:before {
+  content: ""; }
+
+.sgds-icon-sitecore:before {
+  content: ""; }
+
+.sgds-icon-sitefinity:before {
+  content: ""; }
+
+.sgds-icon-swiit:before {
+  content: ""; }
+
+.sgds-icon-wordpress:before {
+  content: ""; }
+
+.sgds-icon-accordion:before {
+  content: ""; }
+
+.sgds-icon-button:before {
+  content: ""; }
+
+.sgds-icon-card:before {
+  content: ""; }
+
+.sgds-icon-checklist:before {
+  content: ""; }
+
+.sgds-icon-container:before {
+  content: ""; }
+
+.sgds-icon-dropdown:before {
+  content: ""; }
+
+.sgds-icon-footer:before {
+  content: ""; }
+
+.sgds-icon-grid:before {
+  content: ""; }
+
+.sgds-icon-icons:before {
+  content: ""; }
+
+.sgds-icon-masthead:before {
+  content: ""; }
+
+.sgds-icon-section:before {
+  content: ""; }
+
+.sgds-icon-tab:before {
+  content: ""; }
+
+.sgds-icon-atom:before {
+  content: ""; }
+
+.sgds-icon-molecule:before {
+  content: ""; }
+
+.sgds-icon-organism:before {
+  content: ""; }
+
+.sgds-icon-page:before {
+  content: ""; }
+
+.sgds-icon-template:before {
+  content: ""; }
+
+.sgds-icon-add-image:before {
+  content: ""; }
+
+.sgds-icon-attachment:before {
+  content: ""; }
+
+.sgds-icon-cloud:before {
+  content: ""; }
+
+.sgds-icon-contact:before {
+  content: ""; }
+
+.sgds-icon-create-folder:before {
+  content: ""; }
+
+.sgds-icon-delay:before {
+  content: ""; }
+
+.sgds-icon-file-copy:before {
+  content: ""; }
+
+.sgds-icon-file-pdf:before {
+  content: ""; }
+
+.sgds-icon-folder:before {
+  content: ""; }
+
+.sgds-icon-add-photo:before {
+  content: ""; }
+
+.sgds-icon-browser:before {
+  content: ""; }
+
+.sgds-icon-calculator:before {
+  content: ""; }
+
+.sgds-icon-camera:before {
+  content: ""; }
+
+.sgds-icon-clock:before {
+  content: ""; }
+
+.sgds-icon-cloud-download:before {
+  content: ""; }
+
+.sgds-icon-cloud-success:before {
+  content: ""; }
+
+.sgds-icon-cloud-upload:before {
+  content: ""; }
+
+.sgds-icon-database:before {
+  content: ""; }
+
+.sgds-icon-download:before {
+  content: ""; }
+
+.sgds-icon-file-add:before {
+  content: ""; }
+
+.sgds-icon-file-alt:before {
+  content: ""; }
+
+.sgds-icon-file:before {
+  content: ""; }
+
+.sgds-icon-hdd:before {
+  content: ""; }
+
+.sgds-icon-image:before {
+  content: ""; }
+
+.sgds-icon-link:before {
+  content: ""; }
+
+.sgds-icon-lock:before {
+  content: ""; }
+
+.sgds-icon-mail:before {
+  content: ""; }
+
+.sgds-icon-print:before {
+  content: ""; }
+
+.sgds-icon-radar:before {
+  content: ""; }
+
+.sgds-icon-save:before {
+  content: ""; }
+
+.sgds-icon-share:before {
+  content: ""; }
+
+.sgds-icon-unlock:before {
+  content: ""; }
+
+.sgds-icon-upload:before {
+  content: ""; }
+
+.sgds-icon-volume-mute:before {
+  content: ""; }
+
+.sgds-icon-volume:before {
+  content: ""; }
+
+.sgds-icon-docker:before {
+  content: ""; }
+
+.sgds-icon-facebook-alt:before {
+  content: ""; }
+
+.sgds-icon-facebook:before {
+  content: ""; }
+
+.sgds-icon-google:before {
+  content: ""; }
+
+.sgds-icon-instagram:before {
+  content: ""; }
+
+.sgds-icon-linkedin-alt:before {
+  content: ""; }
+
+.sgds-icon-linkedin:before {
+  content: ""; }
+
+.sgds-icon-person-add:before {
+  content: ""; }
+
+.sgds-icon-person-cancel:before {
+  content: ""; }
+
+.sgds-icon-person-remove:before {
+  content: ""; }
+
+.sgds-icon-person:before {
+  content: ""; }
+
+.sgds-icon-rss:before {
+  content: ""; }
+
+.sgds-icon-thumbs-down:before {
+  content: ""; }
+
+.sgds-icon-thumbs-up:before {
+  content: ""; }
+
+.sgds-icon-twitter:before {
+  content: ""; }
+
+.sgds-icon-youtube:before {
+  content: ""; }
+
+.sgds-icon-add-place:before {
+  content: ""; }
+
+.sgds-icon-boat:before {
+  content: ""; }
+
+.sgds-icon-bus:before {
+  content: ""; }
+
+.sgds-icon-car:before {
+  content: ""; }
+
+.sgds-icon-layers:before {
+  content: ""; }
+
+.sgds-icon-map:before {
+  content: ""; }
+
+.sgds-icon-my-location:before {
+  content: ""; }
+
+.sgds-icon-place:before {
+  content: ""; }
+
+.sgds-icon-taxi:before {
+  content: ""; }
+
+.sgds-icon-traffic:before {
+  content: ""; }
+
+.sgds-icon-train:before {
+  content: ""; }
+
+.sgds-icon-arrow-down:before {
+  content: ""; }
+
+.sgds-icon-arrow-left:before {
+  content: ""; }
+
+.sgds-icon-arrow-right:before {
+  content: ""; }
+
+.sgds-icon-arrow-top-left:before {
+  content: ""; }
+
+.sgds-icon-arrow-top-right:before {
+  content: ""; }
+
+.sgds-icon-arrow-up:before {
+  content: ""; }
+
+.sgds-icon-check:before {
+  content: ""; }
+
+.sgds-icon-chevron-down:before {
+  content: ""; }
+
+.sgds-icon-chevron-left:before {
+  content: ""; }
+
+.sgds-icon-chevron-right:before {
+  content: ""; }
+
+.sgds-icon-chevron-up:before {
+  content: ""; }
+
+.sgds-icon-cog:before {
+  content: ""; }
+
+.sgds-icon-cross:before {
+  content: ""; }
+
+.sgds-icon-ellipsis:before {
+  content: ""; }
+
+.sgds-icon-home:before {
+  content: ""; }
+
+.sgds-icon-menu:before {
+  content: ""; }
+
+.sgds-icon-minus:before {
+  content: ""; }
+
+.sgds-icon-notification:before {
+  content: ""; }
+
+.sgds-icon-plus:before {
+  content: ""; }
+
+.sgds-icon-sg-crest:before {
+  content: "";
+  color: #db0000; }
+
+.sgds-icon-text-center:before {
+  content: ""; }
+
+.sgds-icon-text-justify:before {
+  content: ""; }
+
+.sgds-icon-text-left:before {
+  content: ""; }
+
+.sgds-icon-text-right:before {
+  content: ""; }
+
+.sgds-icon-add-comment:before {
+  content: ""; }
+
+.sgds-icon-ban:before {
+  content: ""; }
+
+.sgds-icon-bookmark:before {
+  content: ""; }
+
+.sgds-icon-calendar:before {
+  content: ""; }
+
+.sgds-icon-chat:before {
+  content: ""; }
+
+.sgds-icon-circle-info:before {
+  content: ""; }
+
+.sgds-icon-circle-minus:before {
+  content: ""; }
+
+.sgds-icon-circle-plus:before {
+  content: ""; }
+
+.sgds-icon-circle-question:before {
+  content: ""; }
+
+.sgds-icon-circle-warning:before {
+  content: ""; }
+
+.sgds-icon-compress-alt:before {
+  content: ""; }
+
+.sgds-icon-compress:before {
+  content: ""; }
+
+.sgds-icon-edit:before {
+  content: ""; }
+
+.sgds-icon-expand-alt:before {
+  content: ""; }
+
+.sgds-icon-expand:before {
+  content: ""; }
+
+.sgds-icon-external:before {
+  content: ""; }
+
+.sgds-icon-feedback:before {
+  content: ""; }
+
+.sgds-icon-filter:before {
+  content: ""; }
+
+.sgds-icon-info:before {
+  content: ""; }
+
+.sgds-icon-list:before {
+  content: ""; }
+
+.sgds-icon-pin:before {
+  content: ""; }
+
+.sgds-icon-question:before {
+  content: ""; }
+
+.sgds-icon-refresh:before {
+  content: ""; }
+
+.sgds-icon-rsvp-no:before {
+  content: ""; }
+
+.sgds-icon-rsvp-yes:before {
+  content: ""; }
+
+.sgds-icon-search:before {
+  content: ""; }
+
+.sgds-icon-slider-horizontal:before {
+  content: ""; }
+
+.sgds-icon-slider-vertical:before {
+  content: ""; }
+
+.sgds-icon-star:before {
+  content: ""; }
+
+.sgds-icon-sync:before {
+  content: ""; }
+
+.sgds-icon-toggle-minus:before {
+  content: ""; }
+
+.sgds-icon-toggle-off:before {
+  content: ""; }
+
+.sgds-icon-toggle-on:before {
+  content: ""; }
+
+.sgds-icon-toggle-plus:before {
+  content: ""; }
+
+.sgds-icon-triangle-warning:before {
+  content: ""; }
+
+.sgds-icon-warning:before {
+  content: ""; }
+
+.sgds-icon-zoom-in:before {
+  content: ""; }
+
+.sgds-icon-zoom-out:before {
+  content: ""; }
+
+#panel1 {
+  display: none; }

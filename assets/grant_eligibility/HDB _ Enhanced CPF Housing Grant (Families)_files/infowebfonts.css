@@ -1,0 +1,53 @@
+/*
+* INFOWEB CLASSES 
+* PJJ1
+* AUGUST 5, 2013
+*/
+/* LOCAL FONT */
+
+
+@font-face {
+  font-family: 'Cabin';  
+  src: url("/html/Dashboard/Foundation/Theming/fonts/cabin-regular-webfont.eot");
+  src: local('Cabin Regular'), local('Cabin-Regular'), url("/html/Dashboard/Foundation/Theming/fonts/cabin-regular-webfont.eot?open#iefix") format("embedded-opentype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-regular-webfont.woff") format("woff"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-regular-webfont.ttf") format("truetype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-regular-webfont.svg") format("svg");
+  font-weight: 400;
+  font-style: normal; }
+  
+@font-face {
+  font-family: 'Cabin';  
+  src: url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibold-webfont.eot");
+  src: local('Cabin SemiBold'), local('Cabin-SemiBold'), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibold-webfont.eot?open#iefix") format("embedded-opentype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibold-webfont.woff") format("woff"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibold-webfont.ttf") format("truetype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibold-webfont.svg") format("svg"); 
+  font-weight: 600;
+  font-style: normal; }
+
+@font-face {
+    font-family: 'Cabin';
+    src: url("/html/Dashboard/Foundation/Theming/fonts/cabin-bold-webfont.eot");
+    src: local('Cabin Bold'), local('Cabin-Bold'), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bold-webfont.eot?open#iefix") format("embedded-opentype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bold-webfont.woff") format("woff"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bold-webfont.ttf") format("truetype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bold-webfont.svg") format("svg");
+    font-weight: 700;
+    font-style: normal;
+} 
+
+@font-face {
+  font-family: 'Cabin';  
+  src: url("/html/Dashboard/Foundation/Theming/fonts/cabin-italic-webfont.eot");
+  src: local('Cabin Italic'), local('Cabin-Italic'), url("/html/Dashboard/Foundation/Theming/fonts/cabin-italic-webfont.eot?open#iefix") format("embedded-opentype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-italic-webfont.woff") format("woff"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-italic-webfont.ttf") format("truetype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-italic-webfont.svg") format("svg");
+  font-weight: 400;
+  font-style: italic; }
+
+@font-face {
+  font-family: 'Cabin';  
+  src: url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibolditalic-webfont.eot");
+  src: local('Cabin SemiBold Italic'), local('Cabin-SemiBoldItalic'), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibolditalic-webfont.eot?open#iefix") format("embedded-opentype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibolditalic-webfont.woff") format("woff"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibolditalic-webfont.ttf") format("truetype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-semibolditalic-webfont.svg") format("svg");
+  font-weight: 600;
+  font-style: italic; }
+  
+@font-face {
+  font-family: 'Cabin';  
+  src: url("/html/Dashboard/Foundation/Theming/fonts/cabin-bolditalic-webfont.eot");
+  src: local('Cabin Bold Italic'), local('Cabin-BoldItalic'), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bolditalic-webfont.eot?open#iefix") format("embedded-opentype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bolditalic-webfont.woff") format("woff"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bolditalic-webfont.ttf") format("truetype"), url("/html/Dashboard/Foundation/Theming/fonts/cabin-bolditalic-webfont.svg") format("svg"); 
+  font-weight: 700;
+  font-style: italic; } 
+
+
+  

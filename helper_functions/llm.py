@@ -3,6 +3,8 @@ import streamlit as st
 from dotenv import load_dotenv
 from openai import OpenAI
 import tiktoken
+from langchain_openai import ChatOpenAI
+from langchain_openai import OpenAIEmbeddings
 
 
 if load_dotenv('.env'):
@@ -25,7 +27,7 @@ def get_embedding(input, model='text-embedding-3-small'):
     return [x.embedding for x in response.data]
 
 # This is the "Updated" helper function for calling LLM
-def get_completion(prompt, model="gpt-4o-mini", temperature=0, top_p=1.0, max_tokens=1024, n=1, json_output=False):
+def get_completion(prompt, model="gpt-4o-mini", temperature=0, top_p=1.0, max_tokens=256, n=1, json_output=False):
     if json_output == True:
       output_json_structure = {"type": "json_object"}
     else:
@@ -67,3 +69,9 @@ def count_tokens_from_message(messages):
     encoding = tiktoken.encoding_for_model('gpt-4o-mini')
     value = ' '.join([x.get('content') for x in messages])
     return len(encoding.encode(value))
+
+# embedding model that we will use for the session
+embeddings_model = OpenAIEmbeddings(model='text-embedding-3-small')
+
+# llm to be used in RAG pipeplines in this notebook
+llm = ChatOpenAI(model='gpt-4o-mini', temperature=0, seed=42)
