@@ -49,13 +49,10 @@ print(f"Number of documents after splitting: {len(splitted_documents)}")
 vectordb = Chroma.from_documents(
     documents=splitted_documents,
     embedding=embeddings_model,
-    collection_name="naive_splitter", # one database can have multiple collections
+    collection_name="Resale Flat Grant", # one database can have multiple collections
     persist_directory="./vector_db"
 )
 
 rag_chain = RetrievalQA.from_llm(
     retriever=vectordb.as_retriever(), llm=llm
 )
-
-llm_response = rag_chain.invoke('What is enhanced grant for family')
-print(llm_response['result'])
