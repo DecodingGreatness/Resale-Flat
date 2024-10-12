@@ -5,7 +5,12 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 import pandas as pd
 from helper_functions.utility import modifyCount,getCurrentDate,retrieve_three_months_date
+from helper_functions.llm import llm
 from langchain_community.document_loaders import CSVLoader
+import pandas as pd
+from langchain_community.utilities import SQLDatabase
+from sqlalchemy import create_engine
+from langchain_community.agent_toolkits import create_sql_agent
 
 resale_transactions_csv_path = "transaction_records_db/ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv"
 
@@ -45,4 +50,26 @@ with open(resale_transactions_csv_path, newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     filtered_month_records = [transaction for transaction in reader if transaction['month'] in three_months_date]
     table_form = pd.DataFrame(filtered_month_records)
-    print(table_form)
+    test = pd.json_normalize(filtered_month_records)
+    print(test)
+
+# Load CSV data into a DataFrame
+def load_csv(filename):
+    return pd.read_csv(filename)
+
+transaction_db = load_csv(resale_transactions_csv_path)
+print(transaction_db.shape)
+print(transaction_db.columns.tolist())
+
+
+engine = create_engine("sqlite:///resale_transaction.db")
+# transaction_db.to_sql("resale_transaction", engine, index=False)
+
+db = SQLDatabase(engine=engine)
+# print(db.dialect)
+# print(db.get_usable_table_names())
+# print(db.run("SELECT * FROM resale_transaction WHERE resale_price > 600000;"))
+
+agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True)
+
+agent_executor.invoke({"input": "list all transactions in BEDOK STH RD from past three months"})

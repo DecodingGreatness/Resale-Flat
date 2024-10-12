@@ -1,6 +1,6 @@
 import streamlit as st
 import helper_functions.llm as llm
-from business_logic.grant_eligibility.rag import rag_chain
+from business_logic.transaction_price.rag import rag_chain
 
 st.title("Resale Transaction Price Advisor")
 
