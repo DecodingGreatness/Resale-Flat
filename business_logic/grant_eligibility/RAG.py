@@ -49,7 +49,7 @@ print(f"Number of documents after splitting: {len(splitted_documents)}")
 vectordb = Chroma.from_documents(
     documents=splitted_documents,
     embedding=embeddings_model,
-    collection_name="Resale Flat Grant", # one database can have multiple collections
+    collection_name="Resale_Flat_Grant", # one database can have multiple collections
     persist_directory="./vector_db"
 )
 

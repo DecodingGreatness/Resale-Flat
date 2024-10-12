@@ -1,6 +1,11 @@
 import streamlit as st
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 import helper_functions.llm as llm
-from business_logic.grant_eligibility.rag import rag_chain
+from business_logic.grant_eligibility.rag import rag_chain,splitted_documents
+from langchain_openai import OpenAIEmbeddings
+from langchain_chroma import Chroma
 
 st.title("Resale Grant Eligibility Checker")
 
@@ -16,6 +21,7 @@ if form.form_submit_button("Submit"):
     response = llm.get_completion(user_prompt) # <--- This calls the helper function that we have created 🆕
     prompt_result = rag_chain.invoke(user_prompt)
     result = prompt_result["result"]
+
 
     messages.chat_message("user").write(user_prompt)
     messages.chat_message("assistant").write(f"HDB Expert: {result}")
