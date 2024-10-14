@@ -15,18 +15,24 @@ messages = st.container(height=300)
 if form.form_submit_button("Submit"):
     st.toast(f"User Input Submitted - {user_prompt}")
 
-    config = {"configurable": {"thread_id": "abc123"}}
-    result = app.invoke(
-        {"input": f"{user_prompt}"},
-        config=config,
-    )
+    with st.status("Downloading data...", expanded=True) as status:
 
-    chat_history = app.get_state(config).values["chat_history"]
+        config = {"configurable": {"thread_id": "abc123"}}
+        result = app.invoke(
+            {"input": f"{user_prompt}"},
+            config=config,
+        )
 
-    for index, message in enumerate(chat_history):
-        if index % 2 == 0:
-            messages.chat_message("user").write(message.content)
-        else:
-            messages.chat_message("assistant").write(f"HDB Expert: {message.content}")
+        chat_history = app.get_state(config).values["chat_history"]
+
+        status.update(
+            label="Download complete!", state="complete", expanded=False
+        )
+
+        for index, message in enumerate(chat_history):
+            if index % 2 == 0:
+                messages.chat_message("user").write(message.content)
+            else:
+                messages.chat_message("assistant").write(f"HDB Expert: {message.content}")
 
     st.session_state.form_enabled = True
