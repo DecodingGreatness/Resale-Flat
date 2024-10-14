@@ -72,4 +72,8 @@ db = SQLDatabase(engine=engine)
 
 agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True)
 
-agent_executor.invoke({"input": "list all transactions in BEDOK STH RD from past three months"})
+resale_transactions_response = agent_executor.invoke({"input": "list all transactions in BEDOK STH RD from past three months"})
+
+def get_resale_transactions_response(user_prompt):
+    resale_transactions_response = agent_executor.invoke({"input": user_prompt})
+    return resale_transactions_response

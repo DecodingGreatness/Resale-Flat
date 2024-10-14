@@ -1,6 +1,8 @@
 import streamlit as st
-import helper_functions.llm as llm
-from business_logic.transaction_price.rag import rag_chain
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from business_logic.transaction_price.rag import get_resale_transactions_response
 
 st.title("Resale Transaction Price Advisor")
 
@@ -13,10 +15,10 @@ messages = st.container(height=300)
 
 if form.form_submit_button("Submit"):
     st.toast(f"User Input Submitted - {user_prompt}")
-    response = llm.get_completion(user_prompt) # <--- This calls the helper function that we have created 🆕
-    prompt_result = rag_chain.invoke(user_prompt)
-    result = prompt_result["result"]
+    result = get_resale_transactions_response(user_prompt)
+
+    print(result)
 
     messages.chat_message("user").write(user_prompt)
-    messages.chat_message("assistant").write(f"HDB Expert: {result}")
+    messages.chat_message("assistant").write(f"HDB Expert: {result['output']}")
     st.session_state.form_enabled = True

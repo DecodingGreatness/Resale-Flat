@@ -2,10 +2,7 @@ import streamlit as st
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-import helper_functions.llm as llm
-from business_logic.grant_eligibility.rag import rag_chain,splitted_documents
-from langchain_openai import OpenAIEmbeddings
-from langchain_chroma import Chroma
+from business_logic.grant_eligibility.rag import app
 
 st.title("Resale Grant Eligibility Checker")
 
@@ -15,14 +12,21 @@ form.subheader("Prompt")
 user_prompt = form.text_area("Enter your prompt here", height=200)
 messages = st.container(height=300)
 
-
 if form.form_submit_button("Submit"):
     st.toast(f"User Input Submitted - {user_prompt}")
-    response = llm.get_completion(user_prompt) # <--- This calls the helper function that we have created 🆕
-    prompt_result = rag_chain.invoke(user_prompt)
-    result = prompt_result["result"]
 
+    config = {"configurable": {"thread_id": "abc123"}}
+    result = app.invoke(
+        {"input": f"{user_prompt}"},
+        config=config,
+    )
 
-    messages.chat_message("user").write(user_prompt)
-    messages.chat_message("assistant").write(f"HDB Expert: {result}")
+    chat_history = app.get_state(config).values["chat_history"]
+
+    for index, message in enumerate(chat_history):
+        if index % 2 == 0:
+            messages.chat_message("user").write(message.content)
+        else:
+            messages.chat_message("assistant").write(f"HDB Expert: {message.content}")
+
     st.session_state.form_enabled = True
