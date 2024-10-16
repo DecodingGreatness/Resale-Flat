@@ -5,7 +5,6 @@ from io import BytesIO
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 import pandas as pd
 from helper_functions.llm import llm
-import pandas as pd
 from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from langchain_community.agent_toolkits import create_sql_agent
