@@ -1,63 +1,95 @@
-import os
-from dotenv import load_dotenv
-from crewai import Agent, Task, Crew
+from crewai import Agent,Task, Crew
 from helper_functions.llm import llm
-from crewai_tools import CSVSearchTool
+from business_logic.transaction_price.rag import get_resale_transactions_response
+from langchain_community.utilities import SQLDatabase
+from sqlalchemy import create_engine
+from crewai_tools import tool
+from langchain_community.tools.sql_database.tool import QuerySQLDataBaseTool
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
-print(f"The current working directory is: {os.getcwd()}")
 
-load_dotenv('.env')
+engine = create_engine("sqlite:///latest_resale_records.db")
 
-file_path = os.path.abspath('../../transaction_records_db/ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv')
-CSV_reader = CSVSearchTool(csv= file_path)
+db = SQLDatabase(engine=engine)
 
-analyst_agent = Agent(
-    role='Data Analyst',
-    goal='Extract actionable insights',
-    backstory="""You're a data analyst at HDB dealing with resale flats.
-    You're responsible for analyzing data and providing insights to resale flat home buyers.
-    You're currently studying the resale flat transaction prices across different areas of Singapore.""",
-    tools=[CSV_reader], # Optional, defaults to an empty list
-    llm=llm, # Optional
-    verbose=True # Optional
+street_name_generator = Agent(
+    role='street name generator',
+    goal='List all street names around the area based on {input}',
+    backstory="""The existing hdb resale transactions database may not
+        be able to map some areas.Therefore, your role is to list all the
+        street names around the area in {input}
+    """,
+    llm=llm,
+    memory=True,
+    verbose=True
+)
+
+street_name_task = Task(
+    expected_output="a list of street names around the area mentioned in {input}",
+    description="search for street names around the area in {input}",
+    agent=street_name_generator,
+)
+
+convert_street_name_format_agent = Agent(
+    role='street name format convertor',
+    goal="""using the output from street_name_task,
+        iterate over each street name to convert format
+        based on background story""",
+    backstory="""The existing hdb resale transactions database uses certain abbreviations
+        for each street name please replace the following words with their corresponding abbreviations in the text provided.
+        Use the abbreviations as specified:
+            'Road' → 'Rd'
+            'Drive' → 'Dr'
+            'Crescent' → 'Crew'
+            'Street' → 'St'
+            'Avenue' → 'Ave'
+    """,
+    llm=llm,
+    memory=True,
+    verbose=True
+)
+
+convert_street_name_task = Task(
+    expected_output="a list of street names with new abbreviation if applicable",
+    description="format street name inside a list to new abbreviation",
+    agent=convert_street_name_format_agent,
+)
+
+@tool("Query Records")
+def get_transactions_query(input: str) -> str:
+    """Tool description for clarity."""
+    print(input)
+    # Tool logic here
+    tool_output = get_resale_transactions_response(input)
+    return tool_output
+
+sql_query_agent = Agent(
+    role='resale transactions record sql query',
+    goal="""use output from convert_street_name_task to perform sql query
+        for transactions with street name like street name inside output.
+        if there is street name in the output, create a sql query based on {input} location""",
+    backstory="""You are interested to find out the latest transactions
+        in the past three months
+    """,
+    llm=llm,
+    tools=[get_transactions_query],
+    memory=True,
+    verbose=True
+)
+
+sql_query_task = Task(
+    expected_output="compile all resale transactions based on sql query in latest_resale_records.db",
+    description="""using get_transactions_query tool generate an sql query to retrieve
+        all transactions that fits the query
+    """,
+    agent=sql_query_agent,
 )
 
 
 
-analyst_task = Task(
-    description='Use data provided by research assistant to respond to question: {input}',
-    agent=analyst_agent,
-    expected_output='display table content for {input} and provide analysis insights',
+transactions_crew = Crew(
+    agents=[street_name_generator,convert_street_name_format_agent,sql_query_agent],
+    tasks=[street_name_task,convert_street_name_task,sql_query_task],
+    share_crew=True
 )
 
-
-
-research_assistant_agent = Agent(
-    role='Research Assistant',
-    goal='Retrieve Data from csv file base on {input}',
-    backstory="""You're a Research Assistant working for the data analyst at HDB dealing with resale flats.
-    You're responsible filtering dataset based on {input}""",
-    tools=[CSV_reader], # Optional, defaults to an empty list
-    llm=llm, # Optional
-    verbose=True # Optional
-)
-
-research_assistant_task = Task(
-    description='Study csv file for resale flat transactions that were completed in the last three months and respond to question: {input}',
-    agent=analyst_agent,
-    expected_output='return csv data to data analyst agent',
-)
-
-crew = Crew(
-    agents=[research_assistant_agent,analyst_agent],
-    tasks=[research_assistant_task,analyst_task],
-    verbose=True,
-    planning=True, # Enable planning feature
-)
-
-inputs = {'input':'what is latest transactions in bedok'}
-
-results = crew.kickoff(inputs)
-
-print(results)
+crew = transactions_crew.kickoff(inputs={"input": "What are the latest transactions in Tampines"})

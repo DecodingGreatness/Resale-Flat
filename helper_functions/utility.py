@@ -64,3 +64,7 @@ def retrieve_three_months_date():
     three_months.extend([three_months_ago,previous_month,today_month])
     print(three_months)
     return three_months
+
+def retrieve_outputs(response):
+    outputs = response['output']
+    return outputs

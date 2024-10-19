@@ -1,5 +1,6 @@
 import sys
 import os
+import requests
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 from typing import Sequence
 from langchain_community.document_loaders import BSHTMLLoader
