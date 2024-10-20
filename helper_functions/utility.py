@@ -1,5 +1,5 @@
 import streamlit as st
-import requests
+import json
 import hmac
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -68,3 +68,21 @@ def retrieve_three_months_date():
 def retrieve_outputs(response):
     outputs = response['output']
     return outputs
+
+def retrieve_crew_content(crew_result):
+    content = crew_result.raw
+    start_index = content.find('{')
+    end_index = content.rfind('}') + 1
+    json_str = content[start_index:end_index]
+    parsed_data = json.loads(json_str)
+    content = parsed_data.get('content', '')
+    return content
+
+def retrieve_crew_table(crew_result):
+    content = crew_result.raw
+    start_index = content.find('{')
+    end_index = content.rfind('}') + 1
+    json_str = content[start_index:end_index]
+    parsed_data = json.loads(json_str)
+    table = parsed_data.get('table', [])
+    return table

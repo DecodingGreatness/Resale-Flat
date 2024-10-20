@@ -4,7 +4,7 @@ from business_logic.transaction_price.rag import get_resale_transactions_respons
 from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from crewai_tools import tool
-from langchain_community.tools.sql_database.tool import QuerySQLDataBaseTool
+import json
 
 
 engine = create_engine("sqlite:///latest_resale_records.db")
@@ -68,7 +68,11 @@ sql_query_agent = Agent(
         for transactions with street name like street name inside output.
         if there is street name in the output, create a sql query based on {input} location""",
     backstory="""You are interested to find out the latest transactions
-        in the past three months
+        in the past three months.
+        Things to take note:
+            1) if input mentions 4room as flat_type, convert the sql enquiry for
+            flat_type to 4 room
+            2) If {input} mentions transactions take it as a resale record
     """,
     llm=llm,
     tools=[get_transactions_query],
@@ -84,12 +88,76 @@ sql_query_task = Task(
     agent=sql_query_agent,
 )
 
+consultant_agent = Agent(
+    role='HDB resale flat consultant',
+    goal="""using the output from sql_query_task display address the question
+        presented in {input}
+    """,
+    backstory="""You are an expert in resale flat transaction
+        You provide an objective insight about {input} based on data
+        available from sql query task output. Provide insights about
+        the output from sql_query_task as well
+    """,
+    llm=llm,
+    memory=True,
+    verbose=True
+)
+
+consultant_task = Task(
+    expected_output="""objective insights based on output from sql query task
+        that address {input}
+    """,
+    description="""Based on output from sql query task attempt to address
+        question in {input}. If you do not know, mention you do not know and if user can
+        provide relevant information
+    """,
+    agent=consultant_agent,
+)
+
+display_content_agent = Agent(
+    role='content writer',
+    goal="""using the output from sql_query_task display the data in table format
+        and using the output from consultant_task, present the insights in any engaging
+        manner. Please remain objective
+    """,
+    backstory="""You are an expert at data visualisation and love to share data
+    """,
+    llm=llm,
+    memory=True,
+    verbose=True
+)
+
+display_content_task = Task(
+    expected_output="""display a table based on output from sql query task and
+        give some insights on the content. Do not make any insights about the transaction date.
+        Using the insights from consultant_task, supplement your content.
+        Please provide JSON with table and content as the key of the JSON
+        For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
+        Do not fabricate data. If not data is found do not show data in table
+
+        """,
+    description="""show content in a user friendly manner and write the insights
+        in an objective and information manner. Keep it concise
+    """,
+    agent=display_content_agent,
+)
+
 
 
 transactions_crew = Crew(
-    agents=[street_name_generator,convert_street_name_format_agent,sql_query_agent],
-    tasks=[street_name_task,convert_street_name_task,sql_query_task],
+    agents=[
+        street_name_generator,
+        convert_street_name_format_agent,
+        sql_query_agent,
+        consultant_agent,
+        display_content_agent
+        ],
+    tasks=[
+        street_name_task,
+        convert_street_name_task,
+        sql_query_task,
+        consultant_task,
+        display_content_task
+        ],
     share_crew=True
 )
-
-crew = transactions_crew.kickoff(inputs={"input": "What are the latest transactions in Tampines"})
