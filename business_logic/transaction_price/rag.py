@@ -98,8 +98,8 @@ if loaded_data['last_record_count'] != latest_record_count:
         new_data.to_csv(existing_transactions_csv_directory, index=False)
 
         print(f"Content of {existing_transactions_csv_directory} has been replaced successfully!")
-
-        replace_db_from_csv(filtered_records)
+        new_latest_records = retrieve_past_three_months_record(existing_transactions_csv_directory)
+        replace_db_from_csv(new_latest_records)
         print("latest_resale_records.db updated successfully!")
 
         loaded_data['last_record_count'] = latest_record_count

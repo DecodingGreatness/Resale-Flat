@@ -49,7 +49,7 @@ convert_street_name_task = Task(
     agent=convert_street_name_format_agent,
 )
 
-@tool("Query Records")
+@tool("Query_Records")
 def get_transactions_query(input: str) -> str:
     """Tool description for clarity."""
     print(input)
@@ -58,10 +58,11 @@ def get_transactions_query(input: str) -> str:
     return tool_output
 
 sql_query_agent = Agent(
-    role='query resale records using SQL',
+    role='exercute SQL query',
     goal="""
-        SELECT * from resale records where street name or town matches output from convert_street_name_task
-        if no match is found, perform same query on {input} location
+        the output from convert_street_name_task is a list of street names
+        fetch resale records that matches any of the street names presented in output from convert_street_name_task
+        if no match is found, fetch resale records that matches {input} location
         """,
     backstory="""You are interested to find out the latest transactions
         in the past three months.
@@ -69,6 +70,7 @@ sql_query_agent = Agent(
             1) if input mentions 4room as flat_type, convert the sql enquiry for
             flat_type to 4 room (if not ignore this point)
             2) If {input} mentions transactions take it as a resale record
+            3) transaction_date does not exist in db column use month instead
     """,
     llm=llm,
     tools=[get_transactions_query],
@@ -77,9 +79,9 @@ sql_query_agent = Agent(
 )
 
 sql_query_task = Task(
-    expected_output="compile all resale transactions based on sql query in latest_resale_records.db",
-    description="""using get_transactions_query tool generate an sql query to retrieve
-        all transactions that fits the query
+    expected_output="compile all resale records based on sql query",
+    description="""use Query_Records tool to retrieve
+        all resale records that fits the query
     """,
     agent=sql_query_agent,
 )
@@ -125,7 +127,7 @@ display_content_agent = Agent(
 
 display_content_task = Task(
     expected_output="""display a table based on output from sql query task and
-        give some insights on the content. Do not make any insights about the transaction date.
+        give some insights on the content [show up to 15 records]. Do not make any insights about the transaction date.
         Using the insights from consultant_task, supplement your content.
         Please provide JSON with table and content as the key of the JSON
         For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
