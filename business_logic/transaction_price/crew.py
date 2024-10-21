@@ -6,11 +6,6 @@ from sqlalchemy import create_engine
 from crewai_tools import tool
 import json
 
-
-engine = create_engine("sqlite:///latest_resale_records.db")
-
-db = SQLDatabase(engine=engine)
-
 street_name_generator = Agent(
     role='street name generator',
     goal='List all street names around the area based on {input}',
@@ -63,15 +58,16 @@ def get_transactions_query(input: str) -> str:
     return tool_output
 
 sql_query_agent = Agent(
-    role='resale transactions record sql query',
-    goal="""use output from convert_street_name_task to perform sql query
-        for transactions with street name like street name inside output.
-        if there is street name in the output, create a sql query based on {input} location""",
+    role='query resale records using SQL',
+    goal="""
+        SELECT * from resale records where street name or town matches output from convert_street_name_task
+        if no match is found, perform same query on {input} location
+        """,
     backstory="""You are interested to find out the latest transactions
         in the past three months.
         Things to take note:
             1) if input mentions 4room as flat_type, convert the sql enquiry for
-            flat_type to 4 room
+            flat_type to 4 room (if not ignore this point)
             2) If {input} mentions transactions take it as a resale record
     """,
     llm=llm,
@@ -90,12 +86,12 @@ sql_query_task = Task(
 
 consultant_agent = Agent(
     role='HDB resale flat consultant',
-    goal="""using the output from sql_query_task display address the question
+    goal="""using the output from sql_query_task address the question
         presented in {input}
     """,
     backstory="""You are an expert in resale flat transaction
         You provide an objective insight about {input} based on data
-        available from sql query task output. Provide insights about
+        from sql query task output. Provide insights about
         the output from sql_query_task as well
     """,
     llm=llm,
