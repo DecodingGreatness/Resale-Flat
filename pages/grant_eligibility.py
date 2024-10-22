@@ -1,6 +1,9 @@
+import sys
+import os
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(parent_dir)
 import streamlit as st
 from business_logic.grant_eligibility.rag import app
-from helper_functions.llm import security_prompt
 
 st.title("Resale Grant Eligibility Checker")
 
