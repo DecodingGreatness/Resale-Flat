@@ -2,8 +2,6 @@ import streamlit as st
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
-from business_logic.transaction_price.rag import get_resale_transactions_response
-from helper_functions.llm import security_prompt
 from business_logic.transaction_price.crew import transactions_crew
 import pandas as pd
 from helper_functions.utility import retrieve_crew_content,retrieve_crew_table
@@ -19,8 +17,6 @@ messages = st.container(height=300)
 
 if form.form_submit_button("Submit"):
     st.toast(f"User Input Submitted - {user_prompt}")
-    # added_security_prompt = security_prompt(user_prompt)
-    # result = get_resale_transactions_response(user_prompt)
     crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
     content = retrieve_crew_content(crew_result)
     table = retrieve_crew_table(crew_result)
