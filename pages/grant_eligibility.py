@@ -8,13 +8,10 @@ from helper_functions.llm import security_prompt
 
 st.title("Resale Grant Eligibility Checker")
 
-if 'user_input' not in st.session_state:
-    st.session_state.user_input = ""
-
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
-with st.form(key="form",clear_on_submit=True, enter_to_submit=True):
+with st.form(key="form",clear_on_submit=True,enter_to_submit=True):
     user_prompt = st.text_area("Enter your text here:",
                                              value="",
                                              height=200,
