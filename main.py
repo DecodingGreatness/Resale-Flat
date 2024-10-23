@@ -43,7 +43,9 @@ else:
         with open("pages/methodology.py") as f:
             exec(f.read())
     elif st.session_state.selected_page == "Grant Eligibility":
-        import pages.grant_eligibility
+        # Load content from page2.py
+        with open("pages/grant_eligibility.py") as f:
+            exec(f.read())
     elif st.session_state.selected_page == "Resale Price Insights":
         # Load content from page2.py
         with open("pages/resale_transaction_price.py") as f:
