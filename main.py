@@ -44,12 +44,10 @@ else:
             exec(f.read())
     elif st.session_state.selected_page == "Grant Eligibility":
         # Load content from page1.py
-        with open("pages/grant_eligibility.py") as f:
-            exec(f.read())
+            st.switch_page("pages/grant_eligibility.py")
     elif st.session_state.selected_page == "Resale Price Insights":
         # Load content from page2.py
-        with open("pages/resale_transaction_price.py") as f:
-            exec(f.read())
+            st.switch_page("pages/resale_transaction_price.py")
 
     with st.expander("IMPORTANT NOTICE"):
         st.write(
