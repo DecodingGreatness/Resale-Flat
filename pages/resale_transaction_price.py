@@ -16,23 +16,12 @@ with st.form(key="form",clear_on_submit=True,enter_to_submit=True):
     submitted = st.form_submit_button("Submit")
     messages = st.container(height=200)
 
-def formatted_content(content):
-    formatted_output = []
-    for key, value in content.items():
-        if isinstance(value, dict):
-            for sub_key, sub_value in value.items():
-                formatted_output.append(f"**{sub_key}**: {sub_value}")
-        else:
-            formatted_output.append(str(value))
-    return "\n".join(formatted_output)
-
-
 if submitted:
     with st.status("Processing Input...", expanded=True) as status:
         st.toast(f"User Input Submitted - {user_prompt}")
         crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
+        # crew_result = transactions_crew.kickoff(inputs=user_prompt)
         content = retrieve_crew_content(crew_result)
-        formated_content = formatted_content(content)
         table = retrieve_crew_table(crew_result)
         table_frame = pd.DataFrame(table)
 

@@ -1,13 +1,12 @@
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from crewai import Agent,Task, Crew
 from helper_functions.llm import llm
 from business_logic.transaction_price.rag import get_resale_transactions_response
 from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from crewai_tools import tool
-import json
 
 street_name_generator = Agent(
     role='street name generator',
@@ -55,17 +54,20 @@ convert_street_name_task = Task(
 @tool("Query_Records")
 def get_transactions_query(input: str) -> str:
     """Tool description for clarity."""
-    print(input)
-    # Tool logic here
+    print("what input is passed in:",input)
+
     tool_output = get_resale_transactions_response(input)
     return tool_output
 
 sql_query_agent = Agent(
-    role='exercute SQL query',
+    role='generate SQL query and perform the SQL query',
     goal="""
         the output from convert_street_name_task is a list of street names
-        fetch resale records that matches any of the street names presented in output from convert_street_name_task
-        if no match is found, fetch resale records that matches {input} location
+        generate an SQL query to fetch resale records that matches any of the street names presented in output from convert_street_name_task
+        if no match is found, generate an SQL query to fetch resale records that matches {input} location
+        check the SQL query is correct
+        perform the SQL query on Database
+
         """,
     backstory="""You are interested to find out the latest transactions
         in the past three months.
@@ -83,8 +85,7 @@ sql_query_agent = Agent(
 
 sql_query_task = Task(
     expected_output="compile all resale records based on sql query",
-    description="""use Query_Records tool to retrieve
-        all resale records that fits the query
+    description="""use sql_query_agent to complie resale records based on {input}
     """,
     agent=sql_query_agent,
 )
@@ -119,7 +120,7 @@ display_content_agent = Agent(
     role='content writer',
     goal="""using the output from sql_query_task display the data in table format
         and using the output from consultant_task, present the insights in any engaging
-        manner. Please remain objective
+        manner. Please remain objective. Do not create imaginery data
     """,
     backstory="""You are an expert at data visualisation and love to share data
     """,

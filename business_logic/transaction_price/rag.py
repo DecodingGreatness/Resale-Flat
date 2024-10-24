@@ -11,6 +11,7 @@ from langchain_community.agent_toolkits import create_sql_agent
 import pickle
 import sqlite3
 import re
+import json
 
 
 resale_transactions_csv_path = "transaction_records_db/ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv"
@@ -118,6 +119,7 @@ db = SQLDatabase(engine=engine)
 agent_executor = create_sql_agent(llm, db=db, agent_type="openai-tools", verbose=True,top_k=100)
 
 def get_resale_transactions_response(user_prompt):
+
     resale_transactions_response = agent_executor.invoke({"input": f'%{user_prompt}%'})
     return resale_transactions_response
 
