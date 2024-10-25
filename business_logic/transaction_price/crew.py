@@ -1,6 +1,6 @@
-# __import__('pysqlite3')
-# import sys
-# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from crewai import Agent,Task, Crew
 from helper_functions.llm import llm
 from business_logic.transaction_price.rag import get_resale_transactions_response
@@ -8,14 +8,6 @@ from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from crewai_tools import tool
 from langchain_community.agent_toolkits import create_sql_agent
-from langchain_community.tools.sql_database.tool import (
-    InfoSQLDatabaseTool,
-    ListSQLDatabaseTool,
-    QuerySQLCheckerTool,
-    QuerySQLDataBaseTool,
-)
-
-db = SQLDatabase.from_uri("sqlite:///latest_resale_records.db")
 
 street_name_generator = Agent(
     role='street name generator',
