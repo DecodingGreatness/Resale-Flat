@@ -91,7 +91,6 @@ sql_query_task = Task(
     tools=[get_transactions_query],
 )
 
-
 consultant_agent = Agent(
     role='HDB resale flat consultant',
     goal="""using the output from sql_query_task address the question
