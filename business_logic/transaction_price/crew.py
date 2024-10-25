@@ -7,6 +7,7 @@ from business_logic.transaction_price.rag import get_resale_transactions_respons
 from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from crewai_tools import tool
+import json
 
 street_name_generator = Agent(
     role='street name generator',
@@ -54,19 +55,16 @@ convert_street_name_task = Task(
 @tool("Query_Records")
 def get_transactions_query(street_names: list) -> str:
     """Fetch resale records based on street names."""
-
+    # Split the input string into a list
     tool_output = get_resale_transactions_response(street_names)
     return tool_output
 
 sql_query_agent = Agent(
     role='SQL expert with strong attention to detail',
     goal="""
-        the output from convert_street_name_task is a list of street names
-        generate an SQL query to fetch resale records that matches street name in output from convert_street_name_task
-        if no match is found, generate an SQL query to fetch resale records that matches {input} location
-        check the SQL query is correct
-        perform the SQL query on Database
-
+        Utilize the output from the convert_street_name_task, which is a list of street names, to generate an SQL query that fetches resale records with street names matching the pattern '%street_name%'.
+        If no matches are found, generate an SQL query to fetch resale records that correspond to the {input} location.
+        Ensure the generated SQL query is correct and execute it on the database.
         """,
     backstory="""You are interested to find out the latest transactions
         in the past three months.
@@ -135,7 +133,7 @@ display_content_task = Task(
         give some insights on the content [show up to 15 records]. Do not make any insights about the transaction date.
         Using the insights from consultant_task, supplement your content.
         Please provide JSON with table and content as the key of the JSON
-        For table provide the following columns: Town, Street Name, Price, Flat Type, Remaining Lease
+        For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
         Do not fabricate data. If not data is found do not show data in table
 
         """,
