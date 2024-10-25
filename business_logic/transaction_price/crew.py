@@ -53,9 +53,9 @@ convert_street_name_task = Task(
 )
 
 @tool("Query_Records")
-def get_transactions_query(street_names: list) -> str:
+def get_transactions_query(street_names: list) -> list:
     """Fetch resale records based on street names."""
-    # Split the input string into a list
+    print(street_names)
     tool_output = get_resale_transactions_response(street_names)
     return tool_output
 
