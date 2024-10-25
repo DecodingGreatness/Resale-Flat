@@ -52,18 +52,17 @@ convert_street_name_task = Task(
 )
 
 @tool("Query_Records")
-def get_transactions_query(input: str) -> str:
-    """Tool description for clarity."""
-    print("what input is passed in:",input)
+def get_transactions_query(street_names: list) -> str:
+    """Fetch resale records based on street names."""
 
-    tool_output = get_resale_transactions_response(input)
+    tool_output = get_resale_transactions_response(street_names)
     return tool_output
 
 sql_query_agent = Agent(
-    role='generate SQL query and perform the SQL query',
+    role='SQL expert with strong attention to detail',
     goal="""
         the output from convert_street_name_task is a list of street names
-        generate an SQL query to fetch resale records that matches any of the street names presented in output from convert_street_name_task
+        generate an SQL query to fetch resale records that matches street name in output from convert_street_name_task
         if no match is found, generate an SQL query to fetch resale records that matches {input} location
         check the SQL query is correct
         perform the SQL query on Database
@@ -76,6 +75,7 @@ sql_query_agent = Agent(
             flat_type to 4 room (if not ignore this point)
             2) If {input} mentions transactions take it as a resale record
             3) transaction_date does not exist in db column use month instead
+            4) month column in database shows this format: 2024-08-01, for the output just show the month 08 which is August
     """,
     llm=llm,
     tools=[get_transactions_query],
@@ -84,11 +84,13 @@ sql_query_agent = Agent(
 )
 
 sql_query_task = Task(
-    expected_output="compile all resale records based on sql query",
-    description="""use sql_query_agent to complie resale records based on {input}
+    expected_output="compile all resale records based on sql query from sql_query_agent",
+    description="""use sql query from sql_query_agent to complie resale records
     """,
     agent=sql_query_agent,
+    tools=[get_transactions_query],
 )
+
 
 consultant_agent = Agent(
     role='HDB resale flat consultant',
@@ -134,7 +136,7 @@ display_content_task = Task(
         give some insights on the content [show up to 15 records]. Do not make any insights about the transaction date.
         Using the insights from consultant_task, supplement your content.
         Please provide JSON with table and content as the key of the JSON
-        For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
+        For table provide the following columns: Town, Street Name, Price, Flat Type, Remaining Lease
         Do not fabricate data. If not data is found do not show data in table
 
         """,
