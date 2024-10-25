@@ -7,7 +7,15 @@ from business_logic.transaction_price.rag import get_resale_transactions_respons
 from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from crewai_tools import tool
-import json
+from langchain_community.agent_toolkits import create_sql_agent
+from langchain_community.tools.sql_database.tool import (
+    InfoSQLDatabaseTool,
+    ListSQLDatabaseTool,
+    QuerySQLCheckerTool,
+    QuerySQLDataBaseTool,
+)
+
+db = SQLDatabase.from_uri("sqlite:///latest_resale_records.db")
 
 street_name_generator = Agent(
     role='street name generator',
@@ -53,9 +61,10 @@ convert_street_name_task = Task(
 )
 
 @tool("Query_Records")
-def get_transactions_query(street_names: list) -> list:
+def get_transactions_query(street_names: str) -> str:
     """Fetch resale records based on street names."""
     print(street_names)
+    # tool_output = get_resale_transactions_response(street_names)
     tool_output = get_resale_transactions_response(street_names)
     return tool_output
 
@@ -133,7 +142,7 @@ display_content_task = Task(
         give some insights on the content [show up to 15 records]. Do not make any insights about the transaction date.
         Using the insights from consultant_task, supplement your content.
         Please provide JSON with table and content as the key of the JSON
-        For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
+        For table provide the following columns: Town, Street Name, Price, Flat Type, Remaining Lease
         Do not fabricate data. If not data is found do not show data in table
 
         """,
