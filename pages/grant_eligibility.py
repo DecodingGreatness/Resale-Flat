@@ -2,7 +2,7 @@ import streamlit as st
 import sys
 import os
 import time
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from business_logic.grant_eligibility.grant_eligibility_rag import app
 from helper_functions.llm import security_prompt
 
