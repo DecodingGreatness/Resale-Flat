@@ -1,6 +1,6 @@
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from crewai import Agent,Task, Crew
 from helper_functions.llm import llm
 from business_logic.transaction_price.rag import get_resale_transactions_response
@@ -60,12 +60,24 @@ def get_transactions_query(street_names: str) -> str:
     tool_output = get_resale_transactions_response(street_names)
     return tool_output
 
+    #  When the output from convert_street_name_task has more than one street name,
+    #     Utilize the output from the convert_street_name_task, which is a list of street names, to generate an SQL query that fetches resale records matching any record with similar street name
+    #     If no matches are found, generate an SQL query to fetch resale records that correspond to the {input} location.
+    #     Ensure the generated SQL query is correct and execute it on the database.
+
 sql_query_agent = Agent(
     role='SQL expert with strong attention to detail',
     goal="""
-        Utilize the output from the convert_street_name_task, which is a list of street names, to generate an SQL query that fetches resale records with street names matching the pattern '%street_name%'.
-        If no matches are found, generate an SQL query to fetch resale records that correspond to the {input} location.
-        Ensure the generated SQL query is correct and execute it on the database.
+        Generate a SQL query and fetch the resale records from database based on following conditions:
+        1) if output from convert_street_name_task contains more than one street name
+        create a single SQL query that select * that matches/ have similar street name
+            for example:
+                if output from convert_street_name_task is smith street and neil street
+                SELECT * from resale_records WHERE street_name LIKE %smith street% OR %neil street%
+
+
+        2) if there is no records found in point 1, generate an SQL query to fetch resale records that correspond to the {input} location.
+        Ensure the generated SQL query is correct and execute it on the database with maximum call up to two times only.
         """,
     backstory="""You are interested to find out the latest transactions
         in the past three months.
@@ -134,7 +146,7 @@ display_content_task = Task(
         give some insights on the content [show up to 15 records]. Do not make any insights about the transaction date.
         Using the insights from consultant_task, supplement your content.
         Please provide JSON with table and content as the key of the JSON
-        For table provide the following columns: Town, Street Name, Price, Flat Type, Remaining Lease
+        For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
         Do not fabricate data. If not data is found do not show data in table
 
         """,

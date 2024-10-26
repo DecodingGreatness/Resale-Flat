@@ -1,55 +1,46 @@
 import streamlit as st
 from helper_functions.utility import check_password
+from pages.grant_eligibility import show_grant_eligibility
+from pages.resale_transaction_price import resale_price
+from pages.about_us import about_us
+from pages.methodology import grant_methodology
 
 
 if not check_password():
     st.stop()
 
 else:
-    # region <--------- Streamlit App Configuration --------->
-    # st.set_page_config(
-    #     layout="centered",
-    #     page_title="My Streamlit App"
-    # )
 
-    # endregion <--------- Streamlit App Configuration --------->
+    st.title("Resale Flat Home Buyers")
 
-    # if st.button("Home", key="home_button"):
-    #     st.switch_page("pages/about_us.py")
-    # if st.button("Grant Eligibility Checker", key="grant_button"):
-    #     st.switch_page("pages/grant_eligibility.py")
-    # if st.button("Resale Transaction Price Advisor", key="price_button"):
-    #     st.switch_page("pages/resale_transaction_price.py")
+    home, about, methodology = st.tabs(["Home","About Us", "Methodology"])
+    with home:
+        st.subheader("Eligibility for HDB Grants:")
+        st.markdown("""
+           This app helps buyers identify which HDB grants they are eligible for and
+           outlines the specific conditions attached to each grant.
+        """)
+        st.subheader("Determining Resale Flat Prices:")
+        st.markdown("""
+            This app assists buyers in evaluating whether the resale
+            flat prices are fair, helping them assess if a price is too
+            high or too low for their purchase.
+        """)
+        grant_eligibility, resale_transaction_price = st.tabs(["Grant Eligibility","Resale Transaction Price"])
+        with grant_eligibility:
+            st.header("🫰 Grant Eligibility Checker for Resale Flat")
+            show_grant_eligibility()
+        with resale_transaction_price:
+            st.header("🫰 Resale Transaction Price Advisor")
+            resale_price()
 
-    st.title("Main App")
+    with about:
+        st.header("📈 About Us")
+        about_us()
 
-    # Sidebar menu for navigation
-    st.sidebar.title("Menu")
-    menu_options = ["Home", "About Us","Methodology","Grant Eligibility", "Resale Price Insights"]
-    selected_page = st.sidebar.selectbox("Choose a page", menu_options)
-
-    # Store the selected page in session state
-    st.session_state.selected_page = selected_page
-
-    # Routing logic to different pages
-    if st.session_state.selected_page == "Home":
-        st.write("Welcome to the Home Page.")
-    elif st.session_state.selected_page == "About Us":
-        # Load content from page1.py
-        with open("pages/about_us.py") as f:
-            exec(f.read())
-    elif st.session_state.selected_page == "Methodology":
-        # Load content from page1.py
-        with open("pages/methodology.py") as f:
-            exec(f.read())
-    elif st.session_state.selected_page == "Grant Eligibility":
-        # Load content from page2.py
-        with open("pages/grant_eligibility.py") as f:
-            exec(f.read())
-    elif st.session_state.selected_page == "Resale Price Insights":
-        # Load content from page2.py
-        with open("pages/resale_transaction_price.py") as f:
-            exec(f.read())
+    with methodology:
+        st.header("📈 Methodology")
+        grant_methodology()
 
     with st.expander("IMPORTANT NOTICE"):
         st.write(
