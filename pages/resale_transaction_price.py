@@ -28,5 +28,5 @@ def resale_price():
 
             messages.chat_message("user").write(user_prompt)
             st.dataframe(table_frame, use_container_width=True)
-            messages.chat_message("assistant").write(f"HDB Expert: {crew_result}")
+            messages.chat_message("assistant").write(f"HDB Expert: {content}")
             st.session_state.form_enabled = True
