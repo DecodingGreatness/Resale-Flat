@@ -5,7 +5,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from business_logic.transaction_price.crew import transactions_crew
 import pandas as pd
 from helper_functions.utility import retrieve_crew_content,retrieve_crew_table
-import json
 
 def resale_price():
 
