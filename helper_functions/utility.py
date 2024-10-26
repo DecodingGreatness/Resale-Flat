@@ -85,12 +85,15 @@ def retrieve_outputs(response):
 
 def retrieve_crew_content(crew_result):
     content = crew_result.raw
+    print(content)
+    json_content = json.loads(content)
+    print(json_content)
     start_index = content.find('{')
     end_index = content.rfind('}') + 1
     json_str = content[start_index:end_index]
     parsed_data = json.loads(json_str)
-    content = parsed_data.get('content', '')
-    return content
+    parsed_content = parsed_data.get('content', '')
+    return parsed_content
 
 def retrieve_crew_table(crew_result):
     content = crew_result.raw
