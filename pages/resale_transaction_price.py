@@ -23,14 +23,6 @@ def resale_price():
             input_array = {"input": user_prompt}
             crew_result = transactions_crew.kickoff(inputs=input_array)
 
-            # print(f"Raw Output: {crew_result.raw}")
-            # if crew_result.json_dict:
-            #     print(f"JSON Output: {json.dumps(crew_result.json_dict, indent=2)}")
-            # if crew_result.pydantic:
-            #     print(f"Pydantic Output: {crew_result.pydantic}")
-            #     print(f"Tasks Output: {crew_result.tasks_output}")
-            #     print(f"Token Usage: {crew_result.token_usage}")
-            #     print("what is crew result:",crew_result)
             content = retrieve_crew_content(crew_result)
             table = retrieve_crew_table(crew_result)
             table_frame = pd.DataFrame(table)
