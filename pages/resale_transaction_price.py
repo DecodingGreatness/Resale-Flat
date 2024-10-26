@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from business_logic.transaction_price.crew import transactions_crew
 import pandas as pd
 from helper_functions.utility import retrieve_crew_content,retrieve_crew_table
+import json
 
 def resale_price():
 
@@ -19,13 +20,13 @@ def resale_price():
     if submitted_price:
         with st.status("Processing Input...", expanded=True) as status:
             st.toast(f"User Input Submitted - {user_prompt}")
-            crew_result = transactions_crew.kickoff(inputs={"input": f"{user_prompt}"})
+            crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
 
-            # content = retrieve_crew_content(crew_result)
-            # table = retrieve_crew_table(crew_result)
-            # table_frame = pd.DataFrame(table)
+            content = retrieve_crew_content(crew_result)
+            table = retrieve_crew_table(crew_result)
+            table_frame = pd.DataFrame(table)
 
             messages.chat_message("user").write(user_prompt)
-            # st.dataframe(table_frame, use_container_width=True)
+            st.dataframe(table_frame, use_container_width=True)
             messages.chat_message("assistant").write(f"HDB Expert: {crew_result}")
             st.session_state.form_enabled = True

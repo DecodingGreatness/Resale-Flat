@@ -8,6 +8,7 @@ from langchain_community.utilities import SQLDatabase
 from sqlalchemy import create_engine
 from crewai_tools import tool
 from langchain_community.agent_toolkits import create_sql_agent
+import json
 
 street_name_generator = Agent(
     role='street name generator',
