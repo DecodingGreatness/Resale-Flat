@@ -20,6 +20,7 @@ def resale_price():
         with st.status("Processing Input...", expanded=True) as status:
             st.toast(f"User Input Submitted - {user_prompt}")
             crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
+            print("what is crew result:",crew_result)
             content = retrieve_crew_content(crew_result)
             table = retrieve_crew_table(crew_result)
             table_frame = pd.DataFrame(table)

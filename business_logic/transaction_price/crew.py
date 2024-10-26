@@ -68,7 +68,7 @@ def get_transactions_query(street_names: str) -> str:
 sql_query_agent = Agent(
     role='SQL expert with strong attention to detail',
     goal="""
-        Generate a SQL query and fetch the resale records from database based on following conditions:
+        Generate a SQL query and fetch all coulmns of the resale records from database based on following conditions:
         1) if output from convert_street_name_task contains more than one street name
         create a single SQL query that select * that matches/ have similar street name
             for example:
