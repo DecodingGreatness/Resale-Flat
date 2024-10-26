@@ -20,11 +20,12 @@ def resale_price():
         with st.status("Processing Input...", expanded=True) as status:
             st.toast(f"User Input Submitted - {user_prompt}")
             crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
-            content = retrieve_crew_content(crew_result)
-            table = retrieve_crew_table(crew_result)
-            table_frame = pd.DataFrame(table)
+            print(f"Raw Output: {crew_result.raw}")
+            # content = retrieve_crew_content(crew_result)
+            # table = retrieve_crew_table(crew_result)
+            # table_frame = pd.DataFrame(table)
 
             messages.chat_message("user").write(user_prompt)
-            st.dataframe(table_frame, use_container_width=True)
-            messages.chat_message("assistant").write(f"HDB Expert: {content}")
+            # st.dataframe(table_frame, use_container_width=True)
+            messages.chat_message("assistant").write(f"HDB Expert: {crew_result}")
             st.session_state.form_enabled = True
