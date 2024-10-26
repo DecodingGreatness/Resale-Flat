@@ -1,7 +1,6 @@
 import streamlit as st
 import sys
 import os
-import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from business_logic.transaction_price.crew import transactions_crew
 import pandas as pd
@@ -20,9 +19,7 @@ def resale_price():
     if submitted_price:
         with st.status("Processing Input...", expanded=True) as status:
             st.toast(f"User Input Submitted - {user_prompt}")
-            input_array = {"input": user_prompt}
-            crew_result = transactions_crew.kickoff(inputs=input_array)
-
+            crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
             content = retrieve_crew_content(crew_result)
             table = retrieve_crew_table(crew_result)
             table_frame = pd.DataFrame(table)
