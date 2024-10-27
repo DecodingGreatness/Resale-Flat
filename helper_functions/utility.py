@@ -83,7 +83,7 @@ def retrieve_outputs(response):
     outputs = response['output']
     return outputs
 
-def retrieve_crew_content(crew_result):
+def retrieve_crew_content(crew_result,user_prompt):
     content = crew_result.raw
     print("Raw content:", content)  # Debugging
 
@@ -116,6 +116,7 @@ def retrieve_crew_content(crew_result):
         parsed_content = parsed_data.get('content', [])
         print("parsed Content:", parsed_content, type(parsed_content))  # Debugging
          # Check if parsed_content is a dictionary
+        st.header(user_prompt)
         if isinstance(parsed_content, dict):
             insights = parsed_content.get('insights', [])
             summary = parsed_content.get('summary', '')
@@ -147,13 +148,13 @@ def retrieve_crew_content(crew_result):
 
         elif isinstance(parsed_content, str):
             # If parsed_content is a simple string
+            st.header(user_prompt)
             st.write(parsed_content)  # Display the string directly
         else:
             print("Expected 'content' to be either a dictionary or a string.")
             st.write("Content is not structured as expected.")
     else:
         print("Expected 'content' key not found in parsed data.")
-        return None
 
 def retrieve_crew_table(crew_result):
     content = crew_result.raw

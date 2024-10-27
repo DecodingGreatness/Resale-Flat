@@ -20,11 +20,10 @@ def resale_price():
             st.toast(f"User Input Submitted - {user_prompt}")
             crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
 
-            content = retrieve_crew_content(crew_result)
+            content = retrieve_crew_content(crew_result,user_prompt)
             table = retrieve_crew_table(crew_result)
             table_frame = pd.DataFrame(table)
 
-            st.header(user_prompt)
             st.dataframe(table_frame, use_container_width=True)
             st.write(content)
             st.session_state.form_enabled = True
