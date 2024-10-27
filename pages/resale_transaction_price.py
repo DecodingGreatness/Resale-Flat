@@ -14,7 +14,6 @@ def resale_price():
                                                 height=200,
                                                 placeholder="Type something...")
         submitted_price = st.form_submit_button("Submit")
-        messages = st.container(height=200)
 
     if submitted_price:
         with st.status("Processing Input...", expanded=True) as status:
@@ -26,6 +25,6 @@ def resale_price():
             table_frame = pd.DataFrame(table)
 
             st.header(user_prompt)
-            st.write(content)
             st.dataframe(table_frame, use_container_width=True)
+            st.write(content)
             st.session_state.form_enabled = True
