@@ -4,6 +4,7 @@ from pages.grant_eligibility import show_grant_eligibility
 from pages.resale_transaction_price import resale_price
 from pages.about_us import about_us
 from pages.methodology import grant_methodology
+from pages.price_methodology import price_methodology
 
 
 if not check_password():
@@ -44,7 +45,7 @@ else:
         with grant_approach:
             grant_methodology()
         with price_approach:
-            grant_methodology()
+            price_methodology()
 
     with st.expander("IMPORTANT NOTICE"):
         st.write(
