@@ -16,7 +16,7 @@ def resale_price():
         submitted_price = st.form_submit_button("Submit")
 
     if submitted_price:
-        with st.status("Processing Input...", expanded=True) as status:
+        with st.status("Processing Input... Please expect longer processing time", expanded=True) as status:
             st.toast(f"User Input Submitted - {user_prompt}")
             crew_result = transactions_crew.kickoff(inputs={"input": user_prompt})
 
