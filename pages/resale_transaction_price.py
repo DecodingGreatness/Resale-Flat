@@ -25,7 +25,7 @@ def resale_price():
             table = retrieve_crew_table(crew_result)
             table_frame = pd.DataFrame(table)
 
-            messages.chat_message("user").write(user_prompt)
+            st.header(user_prompt)
+            st.write(content)
             st.dataframe(table_frame, use_container_width=True)
-            messages.chat_message("assistant").write(f"HDB Expert: {content}")
             st.session_state.form_enabled = True

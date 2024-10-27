@@ -85,15 +85,75 @@ def retrieve_outputs(response):
 
 def retrieve_crew_content(crew_result):
     content = crew_result.raw
-    print(content)
-    json_content = json.loads(content)
-    print(json_content)
+    print("Raw content:", content)  # Debugging
+
+    if isinstance(content, bytes):
+        content = content.decode('utf-8')
+
+    content = content.strip()
+    if not content:
+        print("Content is empty.")
+        return None
+
     start_index = content.find('{')
     end_index = content.rfind('}') + 1
+
+    if start_index == -1 or end_index == -1:
+        print("Could not find valid JSON in content.")
+        return None
+
     json_str = content[start_index:end_index]
-    parsed_data = json.loads(json_str)
-    parsed_content = parsed_data.get('content', '')
-    return parsed_content
+    print("Extracted JSON string:", json_str)  # Debugging
+
+    try:
+        parsed_data = json.loads(json_str)
+    except json.JSONDecodeError as e:
+        print("JSON decode error:", e)
+        print("JSON string attempted to parse:", json_str)  # Debugging
+        return None
+
+    if 'content' in parsed_data:
+        parsed_content = parsed_data['content']
+        print("parsed Content:", parsed_content, type(parsed_content))  # Debugging
+         # Check if parsed_content is a dictionary
+        if isinstance(parsed_content, dict):
+            insights = parsed_content.get('insights', [])
+            summary = parsed_content.get('summary', '')
+
+            # Display the summary if available
+            if summary:
+                st.header("Summary")
+                st.write(summary)
+
+            # Process insights based on their structure
+            if insights:
+                st.header("Insights")
+                if isinstance(insights, list):
+                    for insight in insights:
+                        if isinstance(insight, dict):
+                            # If the insight is a dictionary with title and description
+                            title = insight.get('title', 'No Title')  # Default title if not found
+                            description = insight.get('description', 'No description available.')  # Default description
+
+                            st.subheader(title)
+                            st.write(description)
+                        elif isinstance(insight, str):
+                            # If the insight is a simple string
+                            st.write(insight)  # Display the string directly
+                else:
+                    st.write("Insights are not structured as expected.")
+            else:
+                st.write("No insights available.")
+
+        elif isinstance(parsed_content, str):
+            # If parsed_content is a simple string
+            st.write(parsed_content)  # Display the string directly
+        else:
+            print("Expected 'content' to be either a dictionary or a string.")
+            st.write("Content is not structured as expected.")
+    else:
+        print("Expected 'content' key not found in parsed data.")
+        return None
 
 def retrieve_crew_table(crew_result):
     content = crew_result.raw
