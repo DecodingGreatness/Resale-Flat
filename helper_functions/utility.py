@@ -113,7 +113,7 @@ def retrieve_crew_content(crew_result):
         return None
 
     if 'content' in parsed_data:
-        parsed_content = parsed_data['content']
+        parsed_content = parsed_data.get('content', [])
         print("parsed Content:", parsed_content, type(parsed_content))  # Debugging
          # Check if parsed_content is a dictionary
         if isinstance(parsed_content, dict):

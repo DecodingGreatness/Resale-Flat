@@ -13,7 +13,7 @@ def resale_price():
                                                 value="",
                                                 height=200,
                                                 placeholder="Type something...")
-        submitted_price = st.form_submit_button("Submit price")
+        submitted_price = st.form_submit_button("Submit")
         messages = st.container(height=200)
 
     if submitted_price:
