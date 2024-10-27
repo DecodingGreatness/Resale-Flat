@@ -147,7 +147,7 @@ display_content_task = Task(
         give some insights on the content [show up to 15 records]. Do not make any insights about the transaction date.
         Using the insights from consultant_task, supplement your content.
         Please provide JSON with table and content as the key of the JSON
-        For table provide the following columns: Month,Town, Street Name, Price, Flat Type, Remaining Lease
+        For table provide the following columns: Town, Street Name, Price, Flat Type, Remaining Lease
         Do not fabricate data. If not data is found do not show data in table
 
         """,
