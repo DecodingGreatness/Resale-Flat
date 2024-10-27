@@ -35,12 +35,16 @@ else:
             resale_price()
 
     with about:
-        st.header("📈 About Us")
+        st.header("🏠 About Us")
         about_us()
 
     with methodology:
-        st.header("📈 Methodology")
-        grant_methodology()
+        st.header("📜 Methodology")
+        grant_approach,price_approach = st.tabs("Grant Eligibility Methodology","Resale Price Methodology")
+        with grant_approach:
+            grant_methodology()
+        with price_approach:
+            grant_methodology()
 
     with st.expander("IMPORTANT NOTICE"):
         st.write(

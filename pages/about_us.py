@@ -2,7 +2,6 @@ import streamlit as st
 
 def about_us():
 
-    st.title("About Us")
     st.subheader("Project Scope Statement:", divider=True)
 
     st.markdown("""
