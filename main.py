@@ -27,6 +27,7 @@ else:
             flat prices are fair, helping them assess if a price is too
             high or too low for their purchase.
         """)
+        st.subheader("Click Tab to select which bot to interact with")
         grant_eligibility, resale_transaction_price = st.tabs(["Grant Eligibility","Resale Transaction Price"])
         with grant_eligibility:
             st.header("🫰 Grant Eligibility Checker for Resale Flat")
