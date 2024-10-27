@@ -1,6 +1,6 @@
-# __import__('pysqlite3')
-# import sys
-# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 from crewai import Agent,Task, Crew
 from helper_functions.llm import llm
 from business_logic.transaction_price.rag import get_resale_transactions_response
