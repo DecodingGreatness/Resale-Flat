@@ -3,8 +3,8 @@ from helper_functions.utility import check_password
 from pages.grant_eligibility import show_grant_eligibility
 from pages.resale_transaction_price import resale_price
 from pages.about_us import about_us
-from pages.methodology import grant_methodology
 from pages.price_methodology import price_methodology
+from pages.grant_methodology import grant_methodology
 
 
 if not check_password():
