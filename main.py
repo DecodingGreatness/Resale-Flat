@@ -40,7 +40,7 @@ else:
 
     with methodology:
         st.header("📜 Methodology")
-        grant_approach,price_approach = st.tabs("Grant Eligibility Methodology","Resale Price Methodology")
+        grant_approach,price_approach = st.tabs(["Grant Eligibility Methodology","Resale Price Methodology"])
         with grant_approach:
             grant_methodology()
         with price_approach:
