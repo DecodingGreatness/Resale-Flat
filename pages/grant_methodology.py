@@ -1,8 +1,6 @@
 import streamlit as st
 
 def grant_methodology():
-
-    st.title("Methodology")
     st.subheader("Grant Eligibility Use Case Methodology:", divider=True)
     st.image("assets/grant_eligibility/Flow Diagram.png", caption="Grant Eligibility Flow Chart Diagram")
     st.subheader("1. File Loading:")

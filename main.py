@@ -18,12 +18,12 @@ else:
     with home:
         st.subheader("Eligibility for HDB Grants:")
         st.markdown("""
-           This app helps buyers identify which HDB grants they are eligible for and
+           This conversational chatbot helps buyers identify which HDB grants they are eligible for and
            outlines the specific conditions attached to each grant.
         """)
         st.subheader("Determining Resale Flat Prices:")
         st.markdown("""
-            This app assists buyers in evaluating whether the resale
+            This insights generator assists buyers in evaluating whether the resale
             flat prices are fair, helping them assess if a price is too
             high or too low for their purchase.
         """)
@@ -32,7 +32,7 @@ else:
             st.header("🫰 Grant Eligibility Checker for Resale Flat")
             show_grant_eligibility()
         with resale_transaction_price:
-            st.header("🫰 Resale Transaction Price Advisor")
+            st.header("📈 Resale Transaction Price Advisor")
             resale_price()
 
     with about:
@@ -41,7 +41,7 @@ else:
 
     with methodology:
         st.header("📜 Methodology")
-        grant_approach,price_approach = st.tabs(["Grant Eligibility Methodology","Resale Price Methodology"])
+        grant_approach,price_approach = st.tabs(["📙 Grant Eligibility Methodology","📘 Resale Price Methodology"])
         with grant_approach:
             grant_methodology()
         with price_approach:
